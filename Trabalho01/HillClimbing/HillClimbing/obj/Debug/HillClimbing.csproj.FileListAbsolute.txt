@@ -1,0 +1,7 @@
+D:\Projetos\artificial_inteligence\Trabalho01\HillClimbing\HillClimbing\bin\Debug\HillClimbing.exe.config
+D:\Projetos\artificial_inteligence\Trabalho01\HillClimbing\HillClimbing\bin\Debug\HillClimbing.exe
+D:\Projetos\artificial_inteligence\Trabalho01\HillClimbing\HillClimbing\bin\Debug\HillClimbing.pdb
+D:\Projetos\artificial_inteligence\Trabalho01\HillClimbing\HillClimbing\obj\Debug\HillClimbing.csprojAssemblyReference.cache
+D:\Projetos\artificial_inteligence\Trabalho01\HillClimbing\HillClimbing\obj\Debug\HillClimbing.csproj.CoreCompileInputs.cache
+D:\Projetos\artificial_inteligence\Trabalho01\HillClimbing\HillClimbing\obj\Debug\HillClimbing.exe
+D:\Projetos\artificial_inteligence\Trabalho01\HillClimbing\HillClimbing\obj\Debug\HillClimbing.pdb
