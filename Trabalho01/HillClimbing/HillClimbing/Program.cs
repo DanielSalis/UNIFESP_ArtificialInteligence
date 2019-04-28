@@ -12,26 +12,23 @@ namespace HillClimbing
         static void Main(string[] args)
         {
             StreamWriter writer = new StreamWriter("results.txt");
-            for (int k=0; k < 500; k++)
+            writer.WriteLine("Hi|Hf|MV");
+            for (int k=0; k < 100; k++)
             {
                 Board Obj = new Board();
                 Obj.GenerateInitialState();
+                
                 //h1
-                //Obj.initialHeuristic = Obj.CalculateH1(Obj.initialState);
-                //Obj.currentHeuristic = Obj.CalculateH1(Obj.initialState);
-                //Obj.finalHeuristic = Obj.CalculateH1(Obj.initialState);
-
-                //h2
-                Obj.initialHeuristic = Obj.CalculateH2(Obj.initialState);
-                Obj.currentHeuristic = Obj.CalculateH2(Obj.initialState);
-                Obj.finalHeuristic = Obj.CalculateH2(Obj.initialState);
-
-                Obj.PrintMatrix();
+                Obj.initialHeuristic = Obj.CalculateH1(Obj.initialState);
+                Obj.currentHeuristic = Obj.CalculateH1(Obj.initialState);
+                Obj.finalHeuristic = Obj.CalculateH1(Obj.initialState);
+                //Obj.PrintMatrix();
 
                 while (true)
                 {
                     
                     Obj.doBestMove();
+                    Obj.moves++;
                     if (Obj.currentHeuristic >= Obj.finalHeuristic)
                     {
                         break;
@@ -39,9 +36,7 @@ namespace HillClimbing
                     Obj.finalHeuristic = Obj.currentHeuristic;
                 }
 
-                writer.WriteLine(Obj.initialHeuristic + " " + Obj.finalHeuristic);
-                //Console.WriteLine(Obj.initialHeuristic + " " + Obj.finalHeuristic);
-                //Console.ReadLine();
+                writer.WriteLine(Obj.initialHeuristic + " " + Obj.finalHeuristic+" |"+Obj.moves);
             }
             writer.Close();
         }

@@ -71,7 +71,6 @@ namespace HillClimbing
                 }
             }
             currentHeuristic = numbersOutOfPlace;
-            moves++;
             return currentHeuristic;
         }
 
