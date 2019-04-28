@@ -17,7 +17,6 @@ namespace HillClimbing
         public int currentHeuristic;
         public int finalHeuristic;
         public int moves = 0;
-
         public void GenerateInitialState()
         {
             var list = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -43,7 +42,6 @@ namespace HillClimbing
 
             finalState = initialState;
         }
-
         public void PrintMatrix()
         {
             for (int i = 0; i < 3; i++)
@@ -56,7 +54,6 @@ namespace HillClimbing
             }
             Console.WriteLine("");
         }
-
         public int CalculateH1(int[,] vet)
         {
             int numbersOutOfPlace=0;
@@ -73,7 +70,6 @@ namespace HillClimbing
             currentHeuristic = numbersOutOfPlace;
             return currentHeuristic;
         }
-
         public int Dist(int[,] vet, int[,] vetIdeal, int i, int j)
         {
             int number = vetIdeal[i, j];
@@ -91,7 +87,6 @@ namespace HillClimbing
             }
             return sum;
         }
-
         public int CalculateH2(int[,] vet)
         {
             int k = 0;
@@ -118,7 +113,6 @@ namespace HillClimbing
             moves++;
             return currentHeuristic;
         }
-
         public int[,] GoUp(int[] ZeroPosition)
         {
             int[,] state = new int[3, 3];
@@ -131,7 +125,6 @@ namespace HillClimbing
             state[ElementPosition[0], ElementPosition[1]] = 0;
             return state;
         }
-
         public int[,] GoDown(int[] ZeroPosition)
         {
             int[,] state = new int[3, 3];
@@ -144,7 +137,6 @@ namespace HillClimbing
             state[ElementPosition[0], ElementPosition[1]] = 0;
             return state;
         }
-
         public int[,] GoLeft(int[] ZeroPosition)
         {
             int[,] state = new int[3, 3];
@@ -157,7 +149,6 @@ namespace HillClimbing
             state[ElementPosition[0], ElementPosition[1]] = 0;
             return state;
         }
-
         public int[,] GoRight(int[] ZeroPosition)
         {
             int[,] state = new int[3, 3];
@@ -170,7 +161,6 @@ namespace HillClimbing
             state[ElementPosition[0], ElementPosition[1]] = 0;
             return state;
         }
-
         public void FindZero(int[] ZeroPosition, int[,] state)
         {
             for (int i = 0; i < 3; i++)
@@ -185,7 +175,6 @@ namespace HillClimbing
                 }
             }
         }
-
         public void doBestMove()
         {
             //Find 0 index
