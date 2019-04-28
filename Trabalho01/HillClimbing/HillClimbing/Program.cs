@@ -12,13 +12,20 @@ namespace HillClimbing
         static void Main(string[] args)
         {
             StreamWriter writer = new StreamWriter("results.txt");
-            for (int k=0; k < 100; k++)
+            for (int k=0; k < 500; k++)
             {
                 Board Obj = new Board();
                 Obj.GenerateInitialState();
-                Obj.initialHeuristic = Obj.CalculateH1(Obj.initialState);
-                Obj.currentHeuristic = Obj.CalculateH1(Obj.initialState);
-                Obj.finalHeuristic = Obj.CalculateH1(Obj.initialState);
+                //h1
+                //Obj.initialHeuristic = Obj.CalculateH1(Obj.initialState);
+                //Obj.currentHeuristic = Obj.CalculateH1(Obj.initialState);
+                //Obj.finalHeuristic = Obj.CalculateH1(Obj.initialState);
+
+                //h2
+                Obj.initialHeuristic = Obj.CalculateH2(Obj.initialState);
+                Obj.currentHeuristic = Obj.CalculateH2(Obj.initialState);
+                Obj.finalHeuristic = Obj.CalculateH2(Obj.initialState);
+
                 Obj.PrintMatrix();
 
                 while (true)

@@ -75,6 +75,51 @@ namespace HillClimbing
             return currentHeuristic;
         }
 
+        public int Dist(int[,] vet, int[,] vetIdeal, int i, int j)
+        {
+            int number = vetIdeal[i, j];
+            int sum = 0;
+
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    if (number == vet[x, y]) {
+                        sum = Math.Abs(x - i) + Math.Abs(y - j);
+                        return sum;
+                    }
+                }
+            }
+            return sum;
+        }
+
+        public int CalculateH2(int[,] vet)
+        {
+            int k = 0;
+            int sumHeuristic;
+            int[] distanceOfNumbers = new int[9];
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (vet[i, j] != idealState[i, j])
+                    {
+                        distanceOfNumbers[k] = Dist(vet, idealState, i, j) ;
+                    }
+                    else
+                    {
+                        distanceOfNumbers[k] = 0;
+                    }
+                    k++;
+                }
+            }
+            sumHeuristic = distanceOfNumbers.Sum();
+            currentHeuristic = sumHeuristic;
+            moves++;
+            return currentHeuristic;
+        }
+
         public int[,] GoUp(int[] ZeroPosition)
         {
             int[,] state = new int[3, 3];
