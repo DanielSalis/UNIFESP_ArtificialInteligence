@@ -2,7 +2,7 @@ import cv2
 import os
 import numpy as np 
 
-eigenface = cv2.face.EigenFaceRecognizer_create()
+eigenface = cv2.face.EigenFaceRecognizer_create(num_components=50, threshold=2)
 fisherface = cv2.face.FisherFaceRecognizer_create()
 lbph = cv2.face.LBPHFaceRecognizer_create()
 
@@ -16,9 +16,21 @@ def getImagemComId():
         id = int(os.path.split(caminhoImagem)[-1].split('_')[1])
         ids.append(id)
         faces.append(imagemFace)
-        cv2.imshow("Face", imagemFace)
-        cv2.waitKey(250)
+        #cv2.imshow("Face", imagemFace)
+        #cv2.waitKey(250)
     return np.array(ids), faces
 
 ids, faces = getImagemComId()
-print(faces)
+#print(faces)
+
+print("Realizando treinamento...")
+eigenface.train(faces, ids)
+eigenface.write('classificadorEigen.yml')
+'''
+fisherface.train(faces, ids)
+fisherface.write('classificadorFisher.yml')
+
+lbph.train(faces, ids)
+lbph.write('classificadorLBPH.yml')
+'''
+print("Treinamento realizado")
