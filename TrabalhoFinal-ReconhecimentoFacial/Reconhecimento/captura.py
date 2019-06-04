@@ -12,7 +12,7 @@ print("Capturando face...")
 while True:
     conectado, imagem = camera.read()
     imagemCinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY) 
-    facesDetectadas = classificador.detectMultiScale(imagemCinza, scaleFactor=1.5, minSize=(150, 150))
+    facesDetectadas = classificador.detectMultiScale(imagemCinza, scaleFactor=1.5, minNeighbors=5, minSize=(150, 150))
     #print(np.average(imagemCinza))
 
     for (x,y,l,a) in facesDetectadas:
@@ -20,7 +20,7 @@ while True:
         if cv2.waitKey(1) == ord('q'):
             print(np.average(imagemCinza))
             if(np.average(imagemCinza) > 110):
-                imagemFace = cv2.resize(imagemCinza[y:y + a, x:x + l], (largura, altura))
+                imagemFace = cv2.resize(imagemCinza[y:y + a+20, x:x + l+20], (largura, altura))
                 cv2.imwrite("fotos/pessoa_" + str(id) + "_" + str(amostra) + ".jpg", imagemFace)
                 print("[Foto" + str(amostra) + "capturada com sucesso]")
                 amostra += 1
