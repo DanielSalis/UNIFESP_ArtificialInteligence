@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Labirinto {
@@ -5,7 +7,7 @@ public class Labirinto {
     public int lines;
     public int columns;
     public char [][] map;
-    public Node[] nodes;
+    public List<Node> nodes = new ArrayList<>();
 
     public char [][]getMaze(){
         Scanner scanner = new Scanner(System.in);
@@ -31,18 +33,91 @@ public class Labirinto {
     }
     
     public void createAdjacencyMatrix(){
+        int nodeValue = 0;
         for(int i=0; i< this.lines; i++){
             for(int j=0; j<this.columns; j++){
                 if(map[i][j] == '.'){
-                    Node newNode  = new Node(i);
-                    settingNeighbours(i, j);
+                    Node newNode  = new Node(nodeValue, i, j);
+                    nodes.add(newNode);
                 }
+                nodeValue++;
+            }
+        }
+        settingNeighbours();
+    }
+
+    public Node getNode(int nodeValue){
+        for (Node node : nodes) {
+            if (node.getValue() == (nodeValue)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    public Node getNode(int i, int j){
+        for (Node node : nodes) {
+            int []positions = node.getPositions();
+            if (positions[0] == i && positions[1] == j) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    public void settingNeighbours(){
+        int nodeValue = 0;
+        for(int i=0; i< this.lines; i++){
+            for(int j=0; j<this.columns; j++){
+                if(map[i][j] == '.'){
+                    Node node  = getNode(nodeValue);
+                    executeVerifications(node, i, j);
+                    node.printNodeNeighbours();
+                }
+                nodeValue++;
             }
         }
     }
 
-    public void settingNeighbours(int i, int j){
+    public void executeVerifications(Node node, int i, int j){
+        verifyLeft(node, i, j);
+        verifyRigth(node, i, j);
+        verifyTop(node, i, j);
+        verifyBottom(node, i, j);
+    }
 
+    public void verifyLeft(Node node, int i, int j){
+        if(j-1 >= 0 && map[i][j-1] == '.'){
+            Node neighbour = getNode(i, j-1);
+            node.addNewNeighbour(neighbour);
+        }
+    }
+
+    public void verifyRigth(Node node,int i, int j){
+        if(j+1 <= lines-1 && map[i][j+1] == '.'){
+            Node neighbour = getNode(i, j+1);
+            node.addNewNeighbour(neighbour);
+        }
+    }
+
+    public void verifyTop(Node node,int i, int j){
+        if(i-1 >= 0 && map[i-1][j] == '.'){
+            Node neighbour = getNode(i-1, j);
+            node.addNewNeighbour(neighbour);
+        }
+    }
+
+    public void verifyBottom(Node node,int i, int j){
+        if(i+1 <= columns-1 && map[i+1][j] == '.'){
+            Node neighbour = getNode(i+1, j);
+            node.addNewNeighbour(neighbour);
+        }
+    }
+
+    public void printValidNodes(){
+        for (Node obj : nodes) {
+            System.out.print(obj.getValue() + " ");
+        }
     }
 
     public static void main(String[] args) {
@@ -53,7 +128,9 @@ public class Labirinto {
         l.columns = scanner.nextInt();
 
         l.map = l.getMaze();
-        l.printMaze(l.map);
+        l.createAdjacencyMatrix();
+         
+        // l.printValidNodes();
 
         scanner.close();
     }
