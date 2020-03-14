@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Labirinto {
     
@@ -32,7 +33,7 @@ public class Labirinto {
         }
     }
     
-    public void createAdjacencyMatrix(){
+    public void findAdjacency(){
         int nodeValue = 0;
         for(int i=0; i< this.lines; i++){
             for(int j=0; j<this.columns; j++){
@@ -72,7 +73,7 @@ public class Labirinto {
                 if(map[i][j] == '.'){
                     Node node  = getNode(nodeValue);
                     executeVerifications(node, i, j);
-                    node.printNodeNeighbours();
+                    // node.printNodeNeighbours();
                 }
                 nodeValue++;
             }
@@ -86,18 +87,22 @@ public class Labirinto {
         verifyBottom(node, i, j);
     }
 
-    public void verifyLeft(Node node, int i, int j){
+    public boolean verifyLeft(Node node, int i, int j){
         if(j-1 >= 0 && map[i][j-1] == '.'){
             Node neighbour = getNode(i, j-1);
             node.addNewNeighbour(neighbour);
+            return true;
         }
+        return false;
     }
 
-    public void verifyRigth(Node node,int i, int j){
+    public boolean verifyRigth(Node node,int i, int j){
         if(j+1 <= lines-1 && map[i][j+1] == '.'){
             Node neighbour = getNode(i, j+1);
             node.addNewNeighbour(neighbour);
+            return true;
         }
+        return false;
     }
 
     public void verifyTop(Node node,int i, int j){
@@ -111,6 +116,36 @@ public class Labirinto {
         if(i+1 <= columns-1 && map[i+1][j] == '.'){
             Node neighbour = getNode(i+1, j);
             node.addNewNeighbour(neighbour);
+        }
+    }
+
+    public void executeAllDfs(){
+        for(Node node : nodes){
+            dfs(node);
+            for(Node n: nodes){
+                n.visited = false;
+            }
+            System.out.println();
+        }
+    }
+
+    public void dfs(Node node){
+        Stack<Node> stack = new Stack<Node>();
+        stack.add(node);
+        while(!stack.isEmpty()){
+            Node currentNode = stack.pop();
+            if(!currentNode.visited){
+                System.out.print(currentNode.value + " ");
+                currentNode.visited = true;
+            }
+
+            List<Node> neighbours = currentNode.getNeighbours();
+            for(int i=0; i< neighbours.size(); i++){
+                Node visitedNeighbour = neighbours.get(i);
+                if(visitedNeighbour != null && !visitedNeighbour.visited){
+                    stack.add(visitedNeighbour);
+                }
+            }
         }
     }
 
@@ -128,9 +163,9 @@ public class Labirinto {
         l.columns = scanner.nextInt();
 
         l.map = l.getMaze();
-        l.createAdjacencyMatrix();
-         
-        // l.printValidNodes();
+        l.findAdjacency();
+        l.executeAllDfs();
+        
 
         scanner.close();
     }
