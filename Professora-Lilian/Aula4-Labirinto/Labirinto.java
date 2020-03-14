@@ -9,6 +9,7 @@ public class Labirinto {
     public int columns;
     public char [][] map;
     public List<Node> nodes = new ArrayList<>();
+    public int optimizedPathLength = 0;
 
     public char [][]getMaze(){
         Scanner scanner = new Scanner(System.in);
@@ -105,18 +106,22 @@ public class Labirinto {
         return false;
     }
 
-    public void verifyTop(Node node,int i, int j){
+    public boolean verifyTop(Node node,int i, int j){
         if(i-1 >= 0 && map[i-1][j] == '.'){
             Node neighbour = getNode(i-1, j);
             node.addNewNeighbour(neighbour);
+            return true;
         }
+        return false;
     }
 
-    public void verifyBottom(Node node,int i, int j){
+    public boolean verifyBottom(Node node,int i, int j){
         if(i+1 <= columns-1 && map[i+1][j] == '.'){
             Node neighbour = getNode(i+1, j);
             node.addNewNeighbour(neighbour);
+            return true;
         }
+        return false;
     }
 
     public void executeAllDfs(){
@@ -125,26 +130,32 @@ public class Labirinto {
             for(Node n: nodes){
                 n.visited = false;
             }
-            System.out.println();
+            // System.out.println();
         }
     }
 
     public void dfs(Node node){
         Stack<Node> stack = new Stack<Node>();
         stack.add(node);
+        int actualPathLengh = 0;
         while(!stack.isEmpty()){
             Node currentNode = stack.pop();
             if(!currentNode.visited){
-                System.out.print(currentNode.value + " ");
+                // System.out.print(currentNode.value + " ");
                 currentNode.visited = true;
+                actualPathLengh++;
             }
 
             List<Node> neighbours = currentNode.getNeighbours();
             for(int i=0; i< neighbours.size(); i++){
-                Node visitedNeighbour = neighbours.get(i);
-                if(visitedNeighbour != null && !visitedNeighbour.visited){
-                    stack.add(visitedNeighbour);
+                Node neighbourToVisit = neighbours.get(i);
+                if(neighbourToVisit != null && !neighbourToVisit.visited){
+                    stack.add(neighbourToVisit);
+                    break;
                 }
+            }
+            if(optimizedPathLength < actualPathLengh){
+                optimizedPathLength = actualPathLengh;
             }
         }
     }
@@ -165,7 +176,7 @@ public class Labirinto {
         l.map = l.getMaze();
         l.findAdjacency();
         l.executeAllDfs();
-        
+        System.out.println(l.optimizedPathLength);
 
         scanner.close();
     }
