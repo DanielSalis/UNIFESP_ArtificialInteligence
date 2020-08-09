@@ -30,8 +30,7 @@ class MCState:
         elif cannibals < 0 or cannibals > 3:
             return False
         return True
-    
-    
+        
     def is_solution(self):
         if self.state_vars == (0,0,0):
             return True
@@ -51,7 +50,6 @@ class MCState:
             return True
 
         return False
-        
 
     def get_next_states(self):
 
@@ -143,12 +141,6 @@ sol_bfs, depths_bfs = search(False)
 
 
 current_state = sol_dfs[0][0]
-while current_state:
-    print(current_state)
-    current_state = current_state.parent
-    
-print("--")
-current_state = sol_dfs[1][0]
 while current_state:
     print(current_state)
     current_state = current_state.parent
